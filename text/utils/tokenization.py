@@ -184,7 +184,6 @@ class FullTokenizer(object):
   def convert_tokens_to_ids(self, tokens):
     return convert_tokens_to_ids(self.vocab, tokens)
 
-
 class BasicTokenizer(object):
   """Runs basic tokenization (punctuation splitting, lower casing, etc.)."""
 
@@ -198,8 +197,17 @@ class BasicTokenizer(object):
 
   def tokenize(self, text):
     """Tokenizes a piece of text."""
-    text = _convert_to_unicode_or_throw(text)
+    text = convert_to_unicode(text)
     text = self._clean_text(text)
+
+    # This was added on November 1st, 2018 for the multilingual and Chinese
+    # models. This is also applied to the English models now, but it doesn't
+    # matter since the English models were not trained on any Chinese data
+    # and generally don't have any Chinese data in them (there are Chinese
+    # characters in the vocabulary because Wikipedia does have some Chinese
+    # words in the English Wikipedia.).
+    text = self._tokenize_chinese_chars(text)
+
     orig_tokens = whitespace_tokenize(text)
     split_tokens = []
     for token in orig_tokens:
@@ -210,6 +218,37 @@ class BasicTokenizer(object):
 
     output_tokens = whitespace_tokenize(" ".join(split_tokens))
     return output_tokens
+
+  def _run_strip_accents(self, text):
+    """Strips accents from a piece of text."""
+    text = unicodedata.normalize("NFD", text)
+    output = []
+    for char in text:
+      cat = unicodedata.category(char)
+      if cat == "Mn":
+        continue
+      output.append(char)
+    return "".join(output)
+
+  def _run_split_on_punc(self, text):
+    """Splits punctuation on a piece of text."""
+    chars = list(text)
+    i = 0
+    start_new_word = True
+    output = []
+    while i < len(chars):
+      char = chars[i]
+      if _is_punctuation(char):
+        output.append([char])
+        start_new_word = True
+      else:
+        if start_new_word:
+          output.append([])
+        start_new_word = False
+        output[-1].append(char)
+      i += 1
+
+    return ["".join(x) for x in output]
 
   def _run_strip_accents(self, text):
     """Strips accents from a piece of text."""
