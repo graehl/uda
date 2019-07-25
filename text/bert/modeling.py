@@ -964,7 +964,7 @@ def assert_rank(tensor, expected_rank, name=None):
     name = tensor.name
 
   expected_rank_dict = {}
-  if isinstance(expected_rank, (int, long)):
+  if isinstance(expected_rank, (int, int)):
     expected_rank_dict[expected_rank] = True
   else:
     for x in expected_rank:
