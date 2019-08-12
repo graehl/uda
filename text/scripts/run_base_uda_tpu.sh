@@ -12,8 +12,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-train_tpu=${COLAB_TPU_ADDR:-node-1}
-eval_tpu=${COLAB_TPU_ADDR:-node-2}
+train_tpu=${TPU_ADDRESS:-node-1}
+eval_tpu=${TPU_ADDRESS:-node-2}
 max_seq_length=${1:-${MAX_SEQ_LENGTH:-128}}
 #512
 gsbucket=${2:-xlnet-logs}
