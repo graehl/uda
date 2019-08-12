@@ -21,7 +21,7 @@ init_dir=${3:-pretrained_bert_base}
 
 echo $train_tpu $max_seq_length $model_dir
 
-specargs="--sup_train_data_dir=data/proc_data/IMDB/train_20   --unsup_data_dir=data/proc_data/IMDB/unsup   --eval_data_dir=data/proc_data/IMDB/dev   --bert_config_file=pretrained_models/bert_base/bert_config.json   --vocab_file=pretrained_models/bert_base/vocab.txt    --task_name=IMDB"
+specargs="--sup_train_data_dir=data/proc_data/IMDB/train_20   --unsup_data_dir=data/proc_data/IMDB/unsup   --eval_data_dir=data/proc_data/IMDB/dev   --bert_config_file=pretrained_models/bert_base/bert_config.json   --vocab_file=pretrained_models/bert_base/vocab.txt    --task_name=IMDB --train_batch_size=32"
 
 python main.py \
   --use_tpu=True \
@@ -34,7 +34,6 @@ python main.py \
   --max_seq_length=${max_seq_length} \
   --num_train_steps=10000 \
   --learning_rate=2e-05 \
-  --train_batch_size=32 \
   --num_warmup_steps=1000 \
   --unsup_ratio=7 \
   --uda_coeff=1 \
@@ -57,7 +56,6 @@ python main.py \
   --eval_batch_size=8 \
   --num_train_steps=3000 \
   --learning_rate=3e-05 \
-  --train_batch_size=32 \
   --num_warmup_steps=300 \
   "$@"
 
