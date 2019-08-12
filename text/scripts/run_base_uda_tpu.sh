@@ -23,6 +23,9 @@ echo $train_tpu $max_seq_length $model_dir
 
 specargs="--sup_train_data_dir=data/proc_data/IMDB/train_20   --unsup_data_dir=data/proc_data/IMDB/unsup   --eval_data_dir=data/proc_data/IMDB/dev   --bert_config_file=pretrained_models/bert_base/bert_config.json   --vocab_file=pretrained_models/bert_base/vocab.txt    --task_name=IMDB --train_batch_size=32"
 
+set -e
+set -x
+
 python main.py \
   --use_tpu=True \
   --tpu_name=${train_tpu} \
