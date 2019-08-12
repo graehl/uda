@@ -27,7 +27,7 @@ cd ..
 
 # download bert large ft
 cd pretrained_models
-if ! [[ -d bert_ft ]] ; then
+if ! [[ -d imdb_bert_ft ]] ; then
 wget https://storage.googleapis.com/uda_model/text/imdb_bert_ft.zip
 unzip imdb_bert_ft.zip && rm imdb_bert_ft.zip
 fi
