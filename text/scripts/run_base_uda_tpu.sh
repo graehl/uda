@@ -44,7 +44,8 @@ python main.py \
   --aug_ops=bt-0.9 \
   --aug_copy=1 \
   --uda_softmax_temp=0.85 \
-  --tsa=linear_schedule
+  --tsa=linear_schedule \
+  "$@"
 
 echo $eval_tpu $max_seq_length $model_dir
 
@@ -64,6 +65,7 @@ python main.py \
   --num_train_steps=3000 \
   --learning_rate=3e-05 \
   --train_batch_size=32 \
-  --num_warmup_steps=300
+  --num_warmup_steps=300 \
+  "$@"
 
 echo $train_tpu $max_seq_length $model_dir
