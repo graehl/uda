@@ -19,6 +19,8 @@ max_seq_length=${1:-128}
 gsbucket=${2:-xlnet-logs}
 model_dir=gs://$gsbucket/uda/text/ckpt/large_ft_uda_exp_1
 
+echo $train_tpu $max_seq_length $model_dir
+
 python main.py \
   --use_tpu=True \
   --tpu_name=${train_tpu} \
@@ -44,6 +46,8 @@ python main.py \
   --uda_softmax_temp=0.85 \
   --tsa=linear_schedule
 
+echo $eval_tpu $max_seq_length $model_dir
+
 python main.py \
   --use_tpu=True \
   --tpu_name=${eval_tpu} \
@@ -61,3 +65,5 @@ python main.py \
   --learning_rate=3e-05 \
   --train_batch_size=32 \
   --num_warmup_steps=300
+
+echo $train_tpu $max_seq_length $model_dir
