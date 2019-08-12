@@ -21,18 +21,14 @@ model_dir=gs://$gsbucket/uda/text/ckpt/large_ft_uda_exp_1
 
 echo $train_tpu $max_seq_length $model_dir
 
+specargs="--sup_train_data_dir=data/proc_data/IMDB/train_20   --unsup_data_dir=data/proc_data/IMDB/unsup   --eval_data_dir=data/proc_data/IMDB/dev   --bert_config_file=pretrained_models/bert_base/bert_config.json   --vocab_file=pretrained_models/bert_base/vocab.txt   --init_checkpoint=pretrained_models/bert_base/bert_model.ckpt   --task_name=IMDB"
+
 python main.py \
   --use_tpu=True \
   --tpu_name=${train_tpu} \
   --do_train=True \
   --do_eval=False \
-  --sup_train_data_dir= \
-  --unsup_data_dir= \
-  --eval_data_dir= \
-  --bert_config_file= \
-  --vocab_file= \
-  --init_checkpoint= \
-  --task_name=IMDB \
+  $specargs \
   --model_dir=${model_dir} \
   --max_seq_length=${max_seq_length} \
   --num_train_steps=10000 \
@@ -54,11 +50,7 @@ python main.py \
   --tpu_name=${eval_tpu} \
   --do_train=False \
   --do_eval=True \
-  --sup_train_data_dir= \
-  --eval_data_dir= \
-  --bert_config_file= \
-  --vocab_file= \
-  --task_name=IMDB \
+  $specargs \
   --model_dir=${model_dir} \
   --max_seq_length=${max_seq_length} \
   --eval_batch_size=8 \
