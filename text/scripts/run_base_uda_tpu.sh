@@ -28,7 +28,7 @@ python main.py \
   --tpu_name=${train_tpu} \
   --do_train=True \
   --do_eval=False \
-  --init_checkpoint=$init_dir
+  --init_checkpoint=$init_dir/bert_model.ckpt
   $specargs \
   --model_dir=${model_dir} \
   --max_seq_length=${max_seq_length} \
