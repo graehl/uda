@@ -14,7 +14,7 @@
 # limitations under the License.
 train_tpu=${COLAB_TPU_ADDR:-node-1}
 eval_tpu=${COLAB_TPU_ADDR:-node-2}
-max_seq_length=${1:-128}
+max_seq_length=${1:-${MAX_SEQ_LENGTH:-128}}
 #512
 gsbucket=${2:-xlnet-logs}
 model_dir=gs://$gsbucket/uda/text/ckpt/large_ft_uda_exp_1

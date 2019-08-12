@@ -18,28 +18,36 @@
 mkdir pretrained_models
 # download bert base
 cd pretrained_models
+if ! [[ -d bert_base ]] ; then
 wget https://storage.googleapis.com/bert_models/2018_10_18/uncased_L-12_H-768_A-12.zip
 unzip uncased_L-12_H-768_A-12.zip && rm uncased_L-12_H-768_A-12.zip
 mv uncased_L-12_H-768_A-12 bert_base
+fi
 cd ..
 
 # download bert large ft
 cd pretrained_models
+if ! [[ -d bert_ft ]] ; then
 wget https://storage.googleapis.com/uda_model/text/imdb_bert_ft.zip
 unzip imdb_bert_ft.zip && rm imdb_bert_ft.zip
+fi
 cd ..
 
 # **** download back translated data ****
 mkdir -p data/back_translation
 cd data/back_translation
+if ! [[ -d imdb_back_trans ]] ; then
 wget https://storage.googleapis.com/uda_model/text/imdb_back_trans.zip
 unzip imdb_back_trans.zip && rm imdb_back_trans.zip
+fi
 cd ../../
 
 # **** download IMDB data and convert it to csv files ****
 mkdir data/IMDB_raw
 cd data/IMDB_raw
+if ! [[ -d csv ]] ; then
 wget https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz
 tar xzvf aclImdb_v1.tar.gz && rm aclImdb_v1.tar.gz
+fi
 cd ../..
 python utils/imdb_format.py --raw_data_dir=data/IMDB_raw/aclImdb --train_id_path=data/IMDB_raw/train_id_list.txt --output_dir=data/IMDB_raw/csv
