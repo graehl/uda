@@ -60,7 +60,7 @@ python main.py \
   --vocab_file= \
   --task_name=IMDB \
   --model_dir=${model_dir} \
-  --max_seq_length=512 \
+  --max_seq_length=${max_seq_length} \
   --eval_batch_size=8 \
   --num_train_steps=3000 \
   --learning_rate=3e-05 \
