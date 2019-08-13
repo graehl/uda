@@ -18,7 +18,7 @@ max_seq_length=${1:-${MAX_SEQ_LENGTH:-128}}
 #512
 gs_base=${2:-gs://xlnet-logs/uda/text}
 init_dir=${3:-$gs_base/pretrained_bert_base}
-model_dir=${4:-$gs_base/ckpt/uda_${max_seq_length}}
+model_dir=${4:-$gs_base/ckpt/uda_tpu_${max_seq_length}}
 data_dir=${5:-$gs_base/proc_data/IMDB}
 
 echo $train_tpu $max_seq_length $model_dir
