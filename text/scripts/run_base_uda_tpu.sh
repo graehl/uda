@@ -16,7 +16,7 @@ train_tpu=${TPU_ADDRESS:-node-1}
 eval_tpu=${TPU_ADDRESS:-node-2}
 max_seq_length=${1:-${MAX_SEQ_LENGTH:-128}}
 #512
-gs_base=${2:-gs://xlnet-logs/uda/text}
+gs_base=${2:-gs://uda-logs/uda/text}
 model_dir=${3:-$gs_base/ckpt/uda_tpu_${max_seq_length}}
 init_dir=${4:-$gs_base/pretrained_bert_base}
 data_dir=${5:-$gs_base/proc_data/IMDB}
