@@ -15,7 +15,7 @@
 #!/bin/bash
 
 # **** download pretrained models ****
-mkdir pretrained_models
+mkdir -p pretrained_models
 # download bert base
 cd pretrained_models
 if ! [[ -d bert_base ]] ; then
