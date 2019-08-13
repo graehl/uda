@@ -44,7 +44,8 @@ cd ../../
 
 # **** download IMDB data and convert it to csv files ****
 if ! [[ -d data/IMDB_raw/aclImdb ]] ; then
-cd data/IMDB_raw
+    cd data/IMDB_raw
+    ls
 wget https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz
 tar xzf aclImdb_v1.tar.gz && rm aclImdb_v1.tar.gz
 cd ../..
