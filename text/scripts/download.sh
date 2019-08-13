@@ -46,8 +46,8 @@ cd ../../
 if ! [[ -d data/IMDB_raw/aclImdb ]] ; then
     cd data/IMDB_raw
     ls
-wget https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz
+    wget https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz
 tar xzf aclImdb_v1.tar.gz && rm aclImdb_v1.tar.gz
-cd ../..
-python utils/imdb_format.py --raw_data_dir=data/IMDB_raw/aclImdb --train_id_path=data/IMDB_raw/train_id_list.txt --output_dir=data/IMDB_raw/csv
+    python ../../utils/imdb_format.py --raw_data_dir=aclImdb --train_id_path=train_id_list.txt --output_dir=csv
+    cd ../..
 fi
