@@ -16,12 +16,14 @@ train_tpu=${TPU_ADDRESS:-node-1}
 eval_tpu=${TPU_ADDRESS:-node-2}
 max_seq_length=${1:-${MAX_SEQ_LENGTH:-128}}
 #512
-model_dir=${2:-gs://xlnet-logs/uda/text/ckpt/uda_${max_seq_length}}
-init_dir=${3:-pretrained_bert_base}
+gs_base=${2:-gs://xlnet-logs/uda/text}
+init_dir=${3:-$gs_base/pretrained_bert_base}
+model_dir=${4:-$gs_base/ckpt/uda_${max_seq_length}}
+data_dir=${5:-$gs_base/proc_data/IMDB}
 
 echo $train_tpu $max_seq_length $model_dir
 
-specargs="--sup_train_data_dir=data/proc_data/IMDB/train_20   --unsup_data_dir=data/proc_data/IMDB/unsup   --eval_data_dir=data/proc_data/IMDB/dev   --bert_config_file=pretrained_models/bert_base/bert_config.json   --vocab_file=pretrained_models/bert_base/vocab.txt    --task_name=IMDB --train_batch_size=32"
+specargs="--sup_train_data_dir=$data_dir/train_20   --unsup_data_dir=$data_dir/unsup   --eval_data_dir=$data_dir/dev   --bert_config_file=$init_dir/bert_config.json   --vocab_file=$init_dir/vocab.txt    --task_name=IMDB --train_batch_size=32"
 
 set -e
 set -x
