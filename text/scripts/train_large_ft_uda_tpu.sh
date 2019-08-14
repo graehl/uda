@@ -20,12 +20,13 @@ gs_base=${2:-gs://uda-logs/uda/text}
 model_dir=${3:-$gs_base/ckpt/uda_ft_tpu_${max_seq_length}}
 init_dir=${4:-$gs_base/imdb_bert_ft} #pretrained_bert_base
 data_dir=${5:-$gs_base/proc_data/IMDB}
-unsup_ratio=${6:-7}
+train_batch=${6:-16}
+unsup_ratio=${7:-7}
 # unsup batch size 7x sup (based on memory usage?)
 
 echo $train_tpu $max_seq_length $model_dir
 
-specargs="--sup_train_data_dir=$data_dir/train_20   --unsup_data_dir=$data_dir/unsup   --eval_data_dir=$data_dir/dev   --bert_config_file=$init_dir/bert_config.json   --vocab_file=$init_dir/vocab.txt    --task_name=IMDB --train_batch_size=32 --max_seq_length=$max_seq_length"
+specargs="--sup_train_data_dir=$data_dir/train_20   --unsup_data_dir=$data_dir/unsup   --eval_data_dir=$data_dir/dev   --bert_config_file=$init_dir/bert_config.json   --vocab_file=$init_dir/vocab.txt    --task_name=IMDB --train_batch_size=$train_batch --max_seq_length=$max_seq_length"
 
 nodeprecated() {
     grep -v eprecat | grep -v 'Instructions for updating' | egrep -v '^Use.*instead'
