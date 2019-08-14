@@ -27,6 +27,10 @@ echo $train_tpu $max_seq_length $model_dir
 
 specargs="--sup_train_data_dir=$data_dir/train_20   --unsup_data_dir=$data_dir/unsup   --eval_data_dir=$data_dir/dev   --bert_config_file=$init_dir/bert_config.json   --vocab_file=$init_dir/vocab.txt    --task_name=IMDB --train_batch_size=32 --max_seq_length=$max_seq_length"
 
+nodeprecated() {
+    grep -v eprecat | grep -v 'Instructions for updating' | egrep -v '^Use.*instead'
+}
+
 set -e
 set -x
 
@@ -40,14 +44,13 @@ python main.py $specargs \
    \
   --num_train_steps=10000 \
   --learning_rate=2e-05 \
-  --train_batch_size=32 \
   --num_warmup_steps=1000 \
   --unsup_ratio=$unsup_ratio \
   --uda_coeff=1 \
   --aug_ops=bt-0.9 \
   --aug_copy=1 \
   --uda_softmax_temp=0.85 \
-  --tsa=linear_schedule 2>&1 | grep -v deprecat
+  --tsa=linear_schedule 2>&1 | nodeprecated
 
 python main.py $specargs \
   --use_tpu=True \
@@ -59,5 +62,4 @@ python main.py $specargs \
   --eval_batch_size=8 \
   --num_train_steps=3000 \
   --learning_rate=3e-05 \
-  --train_batch_size=32 \
-  --num_warmup_steps=300 2>&1 | grep -v deprecat
+  --num_warmup_steps=300 2>&1 | nodeprecated
