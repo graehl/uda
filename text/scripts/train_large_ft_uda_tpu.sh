@@ -20,6 +20,8 @@ gs_base=${2:-gs://uda-logs/uda/text}
 model_dir=${3:-$gs_base/ckpt/uda_ft_tpu_${max_seq_length}}
 init_dir=${4:-$gs_base/imdb_bert_ft} #pretrained_bert_base
 data_dir=${5:-$gs_base/proc_data/IMDB}
+unsup_ratio=${6:-7}
+# unsup batch size 7x sup (based on memory usage?)
 
 echo $train_tpu $max_seq_length $model_dir
 
@@ -40,7 +42,7 @@ python main.py $specargs \
   --learning_rate=2e-05 \
   --train_batch_size=32 \
   --num_warmup_steps=1000 \
-  --unsup_ratio=7 \
+  --unsup_ratio=$unsup_ratio \
   --uda_coeff=1 \
   --aug_ops=bt-0.9 \
   --aug_copy=1 \
