@@ -19,7 +19,7 @@ if [[ ${MAX_SEQ_LENGTH%$pre} != $MAX_SEQ_LENGTH ]] ; then
     MAX_SEQ_LENGTH=${MAX_SEQ_LENGTH%$pre}
 fi
 bert_vocab_file=${2:-pretrained_models/bert_base/vocab.txt}
-data_dir=${3:-data/proc_data_$MAX_SEQ_LENGTH}
+data_dir=${3:-data/proc_data_$MAX_SEQ_LENGTH/IMDB}
 sup_size=${4:-20}
 
 msl=$pre$MAX_SEQ_LENGTH
@@ -28,7 +28,7 @@ if [[ ! -d $data_dir/IMDB/train_$sup_size ]] ; then
 # Preprocess supervised training set
 python preprocess.py \
   --raw_data_dir=data/IMDB_raw/csv \
-  --output_base_dir=$data_dir/IMDB/train_$sup_size \
+  --output_base_dir=$data_dir/train_$sup_size \
   --data_type=sup \
   --sub_set=train \
   --sup_size=$sup_size \
@@ -40,7 +40,7 @@ if [[ ! -d $data_dir/IMDB/dev ]] ; then
 # Preprocess test set
 python preprocess.py \
   --raw_data_dir=data/IMDB_raw/csv \
-  --output_base_dir=$data_dir/IMDB/dev \
+  --output_base_dir=$data_dir/dev \
   --data_type=sup \
   --sub_set=dev \
   --vocab_file=$bert_vocab_file \
@@ -52,7 +52,7 @@ if [[ ! -d $data_dir/IMDB/unsup ]] ; then
 # Preprocess unlabeled set
 python preprocess.py \
   --raw_data_dir=data/IMDB_raw/csv \
-  --output_base_dir=$data_dir/IMDB/unsup \
+  --output_base_dir=$data_dir/unsup \
   --back_translation_dir=data/back_translation/imdb_back_trans \
   --data_type=unsup \
   --sub_set=unsup_in \
