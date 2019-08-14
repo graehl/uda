@@ -20,16 +20,18 @@ if [[ ${MAX_SEQ_LENGTH%$pre} != $MAX_SEQ_LENGTH ]] ; then
 fi
 bert_vocab_file=${2:-pretrained_models/bert_base/vocab.txt}
 data_dir=${3:-data/proc_data_$MAX_SEQ_LENGTH}
+sup_size=${4:-20}
+
 msl=$pre$MAX_SEQ_LENGTH
 
-if [[ ! -d $data_dir/IMDB/train_20 ]] ; then
+if [[ ! -d $data_dir/IMDB/train_$sup_size ]] ; then
 # Preprocess supervised training set
 python preprocess.py \
   --raw_data_dir=data/IMDB_raw/csv \
-  --output_base_dir=$data_dir/IMDB/train_20 \
+  --output_base_dir=$data_dir/IMDB/train_$sup_size \
   --data_type=sup \
   --sub_set=train \
-  --sup_size=20 \
+  --sup_size=$sup_size \
   --vocab_file=$bert_vocab_file \
   $msl
 fi
