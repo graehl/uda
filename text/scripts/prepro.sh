@@ -24,6 +24,7 @@ sup_size=${4:-20}
 
 msl=$pre$MAX_SEQ_LENGTH
 
+set -x
 if [[ ! -d $data_dir/IMDB/train_$sup_size ]] ; then
 # Preprocess supervised training set
 python preprocess.py \
