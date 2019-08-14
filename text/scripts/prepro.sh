@@ -22,6 +22,7 @@ bert_vocab_file=${2:-pretrained_models/bert_base/vocab.txt}
 data_dir=${3:-data/proc_data_$MAX_SEQ_LENGTH}
 msl=$pre$MAX_SEQ_LENGTH
 
+if [[ ! -d $data_dir/IMDB/train_20 ]] ; then
 # Preprocess supervised training set
 python preprocess.py \
   --raw_data_dir=data/IMDB_raw/csv \
@@ -31,7 +32,9 @@ python preprocess.py \
   --sup_size=20 \
   --vocab_file=$bert_vocab_file \
   $msl
+fi
 
+if [[ ! -d $data_dir/IMDB/dev ]] ; then
 # Preprocess test set
 python preprocess.py \
   --raw_data_dir=data/IMDB_raw/csv \
@@ -40,8 +43,10 @@ python preprocess.py \
   --sub_set=dev \
   --vocab_file=$bert_vocab_file \
   $msl
+fi
 
 
+if [[ ! -d $data_dir/IMDB/unsup ]] ; then
 # Preprocess unlabeled set
 python preprocess.py \
   --raw_data_dir=data/IMDB_raw/csv \
@@ -53,3 +58,4 @@ python preprocess.py \
   --aug_copy_num=0 \
   --vocab_file=$bert_vocab_file \
   $msl
+fi
