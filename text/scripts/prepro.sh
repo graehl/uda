@@ -14,7 +14,7 @@
 # limitations under the License.
 #!/bin/bash
 MAX_SEQ_LENGTH=${1:-512}
-pre='--max-seq-length='
+pre='--max_seq_length='
 if [[ ${MAX_SEQ_LENGTH%$pre} != $MAX_SEQ_LENGTH ]] ; then
     MAX_SEQ_LENGTH=${MAX_SEQ_LENGTH%$pre}
 fi
