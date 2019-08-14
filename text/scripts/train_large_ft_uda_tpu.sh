@@ -14,7 +14,7 @@
 # limitations under the License.
 train_tpu=${TPU_ADDRESS:-node-1}
 eval_tpu=${TPU_ADDRESS:-node-2}
-max_seq_length=${1:-${MAX_SEQ_LENGTH:-512}}
+max_seq_length=${1:-${MAX_SEQ_LENGTH:-128}}
 #512
 gs_base=${2:-gs://uda-logs/uda/text}
 model_dir=${3:-$gs_base/ckpt/uda_ft_tpu_${max_seq_length}}
@@ -23,7 +23,7 @@ data_dir=${5:-$gs_base/proc_data/IMDB}
 
 echo $train_tpu $max_seq_length $model_dir
 
-specargs="--sup_train_data_dir=$data_dir/train_20   --unsup_data_dir=$data_dir/unsup   --eval_data_dir=$data_dir/dev   --bert_config_file=$init_dir/bert_config.json   --vocab_file=$init_dir/vocab.txt    --task_name=IMDB --train_batch_size=32"
+specargs="--sup_train_data_dir=$data_dir/train_20   --unsup_data_dir=$data_dir/unsup   --eval_data_dir=$data_dir/dev   --bert_config_file=$init_dir/bert_config.json   --vocab_file=$init_dir/vocab.txt    --task_name=IMDB --train_batch_size=32 --max_seq_length=$max_seq_length"
 
 set -e
 set -x
@@ -35,7 +35,7 @@ python main.py $specargs \
   --do_eval=False \
   --task_name=IMDB \
   --model_dir=${model_dir} \
-  --max_seq_length=512 \
+   \
   --num_train_steps=10000 \
   --learning_rate=2e-05 \
   --train_batch_size=32 \
@@ -54,7 +54,6 @@ python main.py $specargs \
   --do_eval=True \
   --task_name=IMDB \
   --model_dir=${model_dir} \
-  --max_seq_length=512 \
   --eval_batch_size=8 \
   --num_train_steps=3000 \
   --learning_rate=3e-05 \
