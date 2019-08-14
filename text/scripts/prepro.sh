@@ -13,37 +13,43 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #!/bin/bash
-bert_vocab_file=pretrained_models/bert_base/vocab.txt
-
+MAX_SEQ_LENGTH=${1:-512}
+pre='--max-seq-length='
+if [[ ${MAX_SEQ_LENGTH%$pre} != $MAX_SEQ_LENGTH ]] ; then
+    MAX_SEQ_LENGTH=${MAX_SEQ_LENGTH%$pre}
+fi
+bert_vocab_file=${2:-pretrained_models/bert_base/vocab.txt}
+data_dir=${3:-data/proc_data_$MAX_SEQ_LENGTH}
+msl=$pre$MAX_SEQ_LENGTH
 
 # Preprocess supervised training set
 python preprocess.py \
   --raw_data_dir=data/IMDB_raw/csv \
-  --output_base_dir=data/proc_data/IMDB/train_20 \
+  --output_base_dir=$data_dir/IMDB/train_20 \
   --data_type=sup \
   --sub_set=train \
   --sup_size=20 \
   --vocab_file=$bert_vocab_file \
-  $@
+  $msl
 
 # Preprocess test set
 python preprocess.py \
   --raw_data_dir=data/IMDB_raw/csv \
-  --output_base_dir=data/proc_data/IMDB/dev \
+  --output_base_dir=$data_dir/IMDB/dev \
   --data_type=sup \
   --sub_set=dev \
   --vocab_file=$bert_vocab_file \
-  $@
+  $msl
 
 
 # Preprocess unlabeled set
 python preprocess.py \
   --raw_data_dir=data/IMDB_raw/csv \
-  --output_base_dir=data/proc_data/IMDB/unsup \
+  --output_base_dir=$data_dir/IMDB/unsup \
   --back_translation_dir=data/back_translation/imdb_back_trans \
   --data_type=unsup \
   --sub_set=unsup_in \
   --aug_ops=bt-0.9 \
   --aug_copy_num=0 \
   --vocab_file=$bert_vocab_file \
-  $@
+  $msl
