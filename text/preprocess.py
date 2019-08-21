@@ -361,6 +361,7 @@ def dump_tfrecord(features, data_path, worker_id=None, max_shard_size=4096):
     tfrecord_writer.write(tf_example.SerializeToString())
   tf.logging.info("done dumping TFRecord %s" % data_path)
   tfrecord_writer.close()
+  tf.logging.info("TFRecord writer closed for %s" % data_path)
 
 
 def get_data_by_size_lim(train_examples, processor, sup_size):
@@ -568,6 +569,7 @@ def main(_):
         tokenizer, FLAGS.max_seq_length, FLAGS.trunc_keep_right,
         FLAGS.aug_ops, FLAGS.aug_copy_num,
         FLAGS.worker_id, FLAGS.replicas)
+    tf.logging.info("done")
 
 
 if __name__ == "__main__":
