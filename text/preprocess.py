@@ -359,7 +359,7 @@ def dump_tfrecord(features, data_path, worker_id=None, max_shard_size=4096):
       shard_size = 0
     shard_size += 1
     tfrecord_writer.write(tf_example.SerializeToString())
-  tf.logg.info("done dumping TFRecord %s" % data_path)
+  tf.logging.info("done dumping TFRecord %s" % data_path)
   tfrecord_writer.close()
 
 
