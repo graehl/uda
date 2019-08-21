@@ -61,4 +61,5 @@ python preprocess.py \
   --aug_copy_num=0 \
   --vocab_file=$bert_vocab_file \
   $msl
+echo done
 fi
