@@ -39,7 +39,8 @@ python main.py $specargs \
   --use_tpu=True \
   --tpu_name=${train_tpu} \
   --do_train=True \
-  --do_eval=False \
+  --do_eval_along_training=True \
+  --verbose=True \
   --task_name=IMDB \
   --model_dir=${model_dir} \
    \
