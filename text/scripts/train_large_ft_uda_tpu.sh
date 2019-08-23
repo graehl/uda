@@ -43,7 +43,6 @@ python main.py $specargs \
   --verbose=True \
   --task_name=IMDB \
   --model_dir=${model_dir} \
-   \
   --num_train_steps=10000 \
   --learning_rate=2e-05 \
   --num_warmup_steps=1000 \
