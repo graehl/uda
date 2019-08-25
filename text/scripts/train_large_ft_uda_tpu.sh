@@ -26,7 +26,7 @@ unsup_ratio=${7:-7}
 
 echo $train_tpu $max_seq_length $model_dir
 
-specargs="--sup_train_data_dir=$data_dir/train_20   --unsup_data_dir=$data_dir/unsup   --eval_data_dir=$data_dir/dev   --bert_config_file=$init_dir/bert_config.json   --vocab_file=$init_dir/vocab.txt    --task_name=IMDB --train_batch_size=$train_batch --max_seq_length=$max_seq_length"
+specargs="--sup_train_data_dir=$data_dir/train_20   --unsup_data_dir=$data_dir/unsup   --eval_data_dir=$data_dir/dev   --eval_batch_size=8 --bert_config_file=$init_dir/bert_config.json   --vocab_file=$init_dir/vocab.txt    --task_name=IMDB --train_batch_size=$train_batch --max_seq_length=$max_seq_length"
 
 nodeprecated() {
     grep -v eprecat | grep -v 'Instructions for updating' | egrep -v '^Use.*instead'
@@ -60,7 +60,6 @@ python main.py $specargs \
   --do_eval=True \
   --task_name=IMDB \
   --model_dir=${model_dir} \
-  --eval_batch_size=8 \
   --num_train_steps=3000 \
   --learning_rate=3e-05 \
   --num_warmup_steps=300 2>&1 | nodeprecated
