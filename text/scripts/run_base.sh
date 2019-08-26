@@ -12,15 +12,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+data=${1:-data/proc_data_128/IMDB}
+base=${2:-pretrained_models/bert_base}
+tpu=${3:-False}
 python main.py \
-  --use_tpu=False \
+  --use_tpu=$tpu \
   --do_train=True \
   --do_eval=True \
-  --sup_train_data_dir=data/proc_data/IMDB/train_20 \
-  --eval_data_dir=data/proc_data/IMDB/dev \
-  --bert_config_file=pretrained_models/bert_base/bert_config.json \
-  --vocab_file=pretrained_models/bert_base/vocab.txt \
-  --init_checkpoint=pretrained_models/bert_base/bert_model.ckpt \
+  --sup_train_data_dir=$data/train_20 \
+  --eval_data_dir=$data/dev \
+  --bert_config_file=$base/bert_config.json \
+  --vocab_file=$base/vocab.txt \
+  --init_checkpoint=$base/bert_model.ckpt \
   --task_name=IMDB \
   --model_dir=ckpt/base \
   --num_train_steps=3000 \
