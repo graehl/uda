@@ -12,9 +12,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-data=${1:-data/proc_data_128/IMDB}
+MSL=${1:-128}
 base=${2:-pretrained_models/bert_base}
-tpu=${3:-False}
+data=${3:-data/proc_data_$MSL/IMDB}
+tpu=${4:-False}
 python main.py \
   --use_tpu=$tpu \
   --do_train=True \
@@ -29,4 +30,5 @@ python main.py \
   --num_train_steps=3000 \
   --learning_rate=3e-05 \
   --num_warmup_steps=300 \
+  --max_seq_length=$MSL \
   $@
