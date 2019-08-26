@@ -22,6 +22,7 @@ init_dir=${4:-$gs_base/imdb_bert_ft} #pretrained_bert_base
 data_dir=${5:-$gs_base/proc_data/IMDB}
 train_batch=${6:-16}
 unsup_ratio=${7:-7}
+tpu=${8:-True}
 # unsup batch size 7x sup (based on memory usage?)
 
 echo $train_tpu $max_seq_length $model_dir
@@ -36,7 +37,7 @@ set -e
 set -x
 
 python main.py $specargs \
-  --use_tpu=True \
+  --use_tpu=$tpu \
   --tpu_name=${train_tpu} \
   --do_train=True \
   --do_eval_along_training=True \
@@ -54,7 +55,7 @@ python main.py $specargs \
   --tsa=linear_schedule 2>&1 | nodeprecated
 
 python main.py $specargs \
-  --use_tpu=True \
+  --use_tpu=$tpu \
   --tpu_name=${eval_tpu} \
   --do_train=False \
   --do_eval=True \
