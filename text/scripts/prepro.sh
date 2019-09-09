@@ -21,13 +21,15 @@ fi
 bert_vocab_file=${2:-pretrained_models/bert_base/vocab.txt}
 data_dir=${3:-data/proc_data_$MAX_SEQ_LENGTH/IMDB}
 sup_size=${4:-20}
+lc=True
 
 msl=$pre$MAX_SEQ_LENGTH
 
 set -x
 if [[ ! -d $data_dir/IMDB/train_$sup_size ]] ; then
 # Preprocess supervised training set
-python preprocess.py \
+    python preprocess.py \
+  --do_lower_case=$lc \
   --raw_data_dir=data/IMDB_raw/csv \
   --output_base_dir=$data_dir/train_$sup_size \
   --data_type=sup \
@@ -40,6 +42,7 @@ fi
 if [[ ! -d $data_dir/IMDB/dev ]] ; then
 # Preprocess test set
 python preprocess.py \
+  --do_lower_case=$lc \
   --raw_data_dir=data/IMDB_raw/csv \
   --output_base_dir=$data_dir/dev \
   --data_type=sup \
@@ -52,6 +55,7 @@ fi
 if [[ ! -d $data_dir/IMDB/unsup ]] ; then
 # Preprocess unlabeled set
 python preprocess.py \
+  --do_lower_case=$lc \
   --raw_data_dir=data/IMDB_raw/csv \
   --output_base_dir=$data_dir/unsup \
   --back_translation_dir=data/back_translation/imdb_back_trans \
