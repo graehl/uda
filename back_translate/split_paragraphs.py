@@ -102,9 +102,10 @@ def main(_):
   # translations.
   tf.logging.info("splitting sentence")
   for i in range(len(contents)):
-    contents[i] = contents[i].strip()
-    contents[i] = contents[i].decode("utf-8")
-    sent_list = sent_tokenizer(contents[i])
+    s = contents[i].strip()
+    if isinstance(s, bytes):
+      s = s.decode("utf-8")
+    sent_list = sent_tokenizer(s)
     has_long = False
     if i % 100 == 0:
       tf.logging.info("splitting sentence {:d}".format(i))
