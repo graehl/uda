@@ -38,4 +38,6 @@ python main.py \
   --tsa=linear_schedule \
   --aug_ops=bt-0.9 \
   --aug_copy=1 \
-  --uda_coeff=1
+  --uda_coeff=1 \
+  --train_batch_size=$batch_size \
+  --eval_batch_size=$batch_size
