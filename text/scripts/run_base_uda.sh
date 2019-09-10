@@ -17,10 +17,16 @@ base=${2:-pretrained_models/bert_base}
 data=${3:-data/proc_data_$MSL/IMDB}
 tpu=${4:-False}
 batch_size=${5:-8}
-
+train=${6:-1}
+unsupr=${7:-2}
+if [[ $train = 1 ]] ; then
+    train=True
+else
+    train=False
+fi
 python main.py \
   --use_tpu=False \
-  --do_train=True \
+  --do_train=$train \
   --do_eval=True \
   --sup_train_data_dir=$data/train_20 \
   --unsup_data_dir=$data//unsup \
@@ -34,7 +40,7 @@ python main.py \
   --learning_rate=2e-05 \
   --num_warmup_steps=1000 \
   --max_seq_length=$MSL \
-  --unsup_ratio=3 \
+  --unsup_ratio=$unsupr \
   --tsa=linear_schedule \
   --aug_ops=bt-0.9 \
   --aug_copy=1 \
