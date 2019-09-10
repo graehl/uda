@@ -16,7 +16,7 @@
 MAX_SEQ_LENGTH=${1:-128}
 pre='--max_seq_length='
 if [[ ${MAX_SEQ_LENGTH%$pre} != $MAX_SEQ_LENGTH ]] ; then
-    MAX_SEQ_LENGTH=${MAX_SEQ_LENGTH%$pre}
+    MAX_SEQ_LENGTH=${MAX_SEQ_LENGTH#$pre}
 fi
 bert_vocab_file=${2:-pretrained_models/bert_base/vocab.txt}
 data_dir=${3:-data/proc_data_$MAX_SEQ_LENGTH/IMDB}

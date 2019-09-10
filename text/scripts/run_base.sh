@@ -17,7 +17,7 @@ base=${2:-pretrained_models/bert_base}
 data=${3:-data/proc_data_$MSL/IMDB}
 tpu=${4:-False}
 batch_size=${5:-8}
-
+shift
 python main.py \
   --use_tpu=$tpu \
   --do_train=True \
@@ -33,5 +33,4 @@ python main.py \
   --learning_rate=3e-05 \
   --num_warmup_steps=300 \
   --max_seq_length=$MSL \
-  --train_batch_size=$batch_size \
-  $@
+  --train_batch_size=$batch_size
